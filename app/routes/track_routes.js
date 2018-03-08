@@ -15,7 +15,7 @@ module.exports = function(app, db) {
 app.put('/tracks/:id', (req, res) => {
     const id = req.params.id;
     const details = { '_id': new ObjectID(id) };
-    const track = { text: req.body.body, title: req.body.title };
+    const track = { title: req.body.title, artists: req.body.artists, album: req.body.album};
     db.collection('tracks').update(details, track, (err, result) => {
       if (err) {
           res.send({'error':'An error has occurred'});
@@ -38,7 +38,6 @@ app.put('/tracks/:id', (req, res) => {
   });
 
 app.post('/tracks', (req, res) => {
-    //const track = { text: req.body.body, title: req.body.title };
     const track = { title: req.body.title, artists: req.body.artists, album: req.body.album};
     console.log(track);
     db.collection('tracks').insert(track, (err, result) => {
