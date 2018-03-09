@@ -48,4 +48,3 @@ app.post('/artists', (req, res) => {
     });
   });
 };
-z
