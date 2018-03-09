@@ -1,9 +1,9 @@
 var ObjectID = require('mongodb').ObjectID;
 module.exports = function(app, db) {
-  app.get('/tracks/:id', (req, res) => {
+  app.get('/albums/:id', (req, res) => {
     const id = req.params.id;
     const details = { '_id': new ObjectID(id) };
-    db.collection('tracks').findOne(details, (err, item) => {
+    db.collection('albums').findOne(details, (err, item) => {
       if (err) {
         res.send({'error':'An error has occurred'});
       } else {
@@ -12,34 +12,34 @@ module.exports = function(app, db) {
     });
   });
 
-app.put('/tracks/:id', (req, res) => {
+app.put('/albums/:id', (req, res) => {
     const id = req.params.id;
     const details = { '_id': new ObjectID(id) };
-    const track = { title: req.body.title, artists: req.body.artists, album: req.body.album};
-    db.collection('tracks').update(details, track, (err, result) => {
+    const album = { title: req.body.title, artists: req.body.artists, songs: req.body.songs};
+    db.collection('albums').update(details, album, (err, result) => {
       if (err) {
           res.send({'error':'An error has occurred'});
       } else {
-          res.send(track);
+          res.send(album);
       } 
     });
   }); 
 
-  app.delete('/tracks/:id', (req, res) => {
+  app.delete('/albums/:id', (req, res) => {
     const id = req.params.id;
     const details = { '_id': new ObjectID(id) };
-    db.collection('tracks').remove(details, (err, item) => {
+    db.collection('albums').remove(details, (err, item) => {
       if (err) {
         res.send({'error':'An error has occurred'});
       } else {
-        res.send('track ' + id + ' deleted!');
+        res.send('album ' + id + ' deleted!');
       } 
     });
   });
 
-app.post('/tracks', (req, res) => {
-    const track = { title: req.body.title, artists: req.body.artists, album: req.body.album};
-    db.collection('tracks').insert(track, (err, result) => {
+app.post('/albums', (req, res) => {
+    const album = { title: req.body.title, artists: req.body.artists, songs: req.body.songs};
+    db.collection('albums').insert(album, (err, result) => {
       if (err) { 
         res.send({ 'error': 'An error has occurred' }); 
       } else {

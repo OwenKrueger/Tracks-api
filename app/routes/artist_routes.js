@@ -1,9 +1,9 @@
 var ObjectID = require('mongodb').ObjectID;
 module.exports = function(app, db) {
-  app.get('/tracks/:id', (req, res) => {
+  app.get('/artists/:id', (req, res) => {
     const id = req.params.id;
     const details = { '_id': new ObjectID(id) };
-    db.collection('tracks').findOne(details, (err, item) => {
+    db.collection('artists').findOne(details, (err, item) => {
       if (err) {
         res.send({'error':'An error has occurred'});
       } else {
@@ -12,34 +12,34 @@ module.exports = function(app, db) {
     });
   });
 
-app.put('/tracks/:id', (req, res) => {
+app.put('/artists/:id', (req, res) => {
     const id = req.params.id;
     const details = { '_id': new ObjectID(id) };
-    const track = { title: req.body.title, artists: req.body.artists, album: req.body.album};
-    db.collection('tracks').update(details, track, (err, result) => {
+    const artist = { name: req.body.name };
+    db.collection('artists').update(details, artist, (err, result) => {
       if (err) {
           res.send({'error':'An error has occurred'});
       } else {
-          res.send(track);
+          res.send(artist);
       } 
     });
   }); 
 
-  app.delete('/tracks/:id', (req, res) => {
+  app.delete('/artists/:id', (req, res) => {
     const id = req.params.id;
     const details = { '_id': new ObjectID(id) };
-    db.collection('tracks').remove(details, (err, item) => {
+    db.collection('artists').remove(details, (err, item) => {
       if (err) {
         res.send({'error':'An error has occurred'});
       } else {
-        res.send('track ' + id + ' deleted!');
+        res.send('artist ' + id + ' deleted!');
       } 
     });
   });
 
-app.post('/tracks', (req, res) => {
-    const track = { title: req.body.title, artists: req.body.artists, album: req.body.album};
-    db.collection('tracks').insert(track, (err, result) => {
+app.post('/artists', (req, res) => {
+    const artist = { name: req.body.name };
+    db.collection('artists').insert(artist, (err, result) => {
       if (err) { 
         res.send({ 'error': 'An error has occurred' }); 
       } else {
@@ -48,3 +48,4 @@ app.post('/tracks', (req, res) => {
     });
   });
 };
+z
