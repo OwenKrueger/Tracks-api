@@ -12,6 +12,22 @@ module.exports = function(app, db) {
     });
   });
 
+  app.get('/alltracks', (req, res) => {
+    db.collection('tracks').find((err, cursor) => {
+      let items = [];
+      
+      cursor.each(function(err, item) {
+      
+        if(item){
+          items.push(item)
+        }
+        if(!item){
+          res.send(items)
+        }
+      });
+    });
+  });
+
 app.put('/tracks/:id', (req, res) => {
     const id = req.params.id;
     const details = { '_id': new ObjectID(id) };
